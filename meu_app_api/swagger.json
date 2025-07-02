@@ -1,0 +1,183 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "API Conselho do Ano - Equilíbrio e Terapia",
+    "description": "A API Conselho do Ano - Equilíbrio e Terapia é um projeto criado para a geração de conselhos baseado na data de nascimento do consulente, o ano a ser analisado e a orientação das cartas do Tarot de acordo com cálculo numerológico dos Arcanos Maiores. Além disso permite cadastrar consulentes interessados na página, consultar histórico de conselhos gerados na aplicação e deleção de conselhos já gerados."
+  },
+  "host": "localhost:5000",
+  "basePath": "/",
+  "schemes": ["http"],
+  "produces": ["application/json"],
+  "tags": [
+    {
+      "name": "Conselhos",
+      "description": "Geração de conselhos com base no ano e aniversário"
+    },
+    {
+      "name": "Consulentes",
+      "description": "Cadastro de usuários interessados"
+    },
+    {
+      "name": "Histórico",
+      "description": "Consulta de conselhos já gerados"
+    }
+  ],
+  "paths": {
+    "/conselho": {
+      "post": {
+        "tags": ["Conselhos"],
+        "summary": "Gera o conselho para um ano específico",
+        "description": "Retorna o nome, número e mensagem do Arcano correspondente ao ano e data de nascimento fornecidos.",
+        "consumes": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "dados",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "ano": {
+                  "type": "string",
+                  "example": "2025"
+                },
+                "aniversario": {
+                  "type": "string",
+                  "example": "23/06/1985"
+                }
+              },
+              "required": ["ano", "aniversario"]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Conselho gerado com sucesso",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "numero": { "type": "integer" },
+                "nome": { "type": "string" },
+                "conselho": { "type": "string" }
+              }
+            }
+          },
+          "400": {
+            "description": "Erro de validação. Possíveis causas:\n- Ano e aniversário ausentes\n- Ano com formato inválido\n- Ano menor que o atual ou maior que o atual + 5\n- Data de nascimento inválida ou futura"
+          },
+          "404": {
+            "description": "Arcano não encontrado com base nos dados fornecidos"
+          },
+          "500": {
+            "description": "Erro interno do servidor"
+          }
+        }
+      }
+    },
+    "/consulentes": {
+      "post": {
+        "tags": ["Consulentes"],
+        "summary": "Cadastro de novos consulentes",
+        "description": "Recebe nome e e-mail para registrar o consulente que deseja receber novidades da página Equilíbrio e Terapia.",
+        "consumes": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "dados",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "nome": {
+                  "type": "string",
+                  "example": "Joana Carrasco"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "joana@email.com"
+                }
+              },
+              "required": ["nome", "email"]
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Usuário cadastrado com sucesso",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "mensagem": {
+                  "type": "string",
+                  "example": "Usuário cadastrado com sucesso."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Erro de validação. Possíveis causas:\n- Nome ou e-mail ausente\n- Formato de e-mail inválido (ex: deve conter \"@\")"
+          },
+          "500": {
+            "description": "Erro interno do servidor"
+          }
+        }
+      }
+    },
+    "/historico": {
+      "get": {
+        "tags": ["Histórico"],
+        "summary": "Lista o histórico de conselhos gerados",
+        "description": "Retorna uma lista com todos os conselhos gerados, com dados como ano, aniversário, arcano e data de geração.",
+        "responses": {
+          "200": {
+            "description": "Lista de conselhos gerados",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": { "type": "integer" },
+                  "ano": { "type": "integer" },
+                  "aniversario": { "type": "string" },
+                  "numero_arcano": { "type": "integer" },
+                  "nome_arcano": { "type": "string" },
+                  "conselho": { "type": "string" },
+                  "data_geracao": { "type": "string" }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor"
+          }
+        }
+      }
+    },
+    "/historico/{id}": {
+      "delete": {
+        "tags": ["Histórico"],
+        "summary": "Remove um conselho do histórico",
+        "description": "Permite excluir um registro específico de conselho com base no ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "ID do conselho a ser removido",
+            "example": 3
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Conselho removido com sucesso"
+          },
+          "500": {
+            "description": "Erro interno ao tentar remover o conselho"
+          }
+        }
+      }
+    }
+  }
+}
