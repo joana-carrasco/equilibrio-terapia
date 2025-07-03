@@ -1,75 +1,50 @@
-Equilíbrio e Terapia – Front-End
-Este repositório contém o front-end da aplicação Equilíbrio e Terapia. Ele é responsável por coletar as informações do usuário (nome, e-mail, data de nascimento e ano desejado) e exibir o conselho gerado com base no retorno da API.
-
-✅ Tecnologias utilizadas
-   HTML5
-   CSS3
-   JavaScript (puro)
-   Consumo de API REST via fetch
-
-📁 Estrutura
-
+Equilíbrio e Terapia – Front-end da Aplicação de Conselhos com Tarot
+Este é o front-end da aplicação desenvolvida como parte da disciplina Desenvolvimento Full Stack Básico da PUC-Rio. Ele oferece uma interface interativa e amigável para que os usuários possam obter conselhos personalizados baseados nos Arcanos Maiores do Tarot, com base em seu ano de interesse e data de nascimento.
+________________________________________
+Tecnologias Utilizadas
+   •	HTML5
+   •	CSS3
+   •	JavaScript Vanilla
+   •	FontAwesome CDN (ícones)
+________________________________________
+Estrutura de Pastas
       meu_app_front/
-      ├── index.html     # Página principal
-      ├── style.css      # Estilos da interface
-      ├── script.js      # Lógica de interação com a API e interface
-      └── imagens/       # Imagens dos arcanos (1.jpg até 21.jpg)
+      ├── index.html         # Página principal da aplicação
+      ├── script.js          # Lógica de interação e integração com a API
+      ├── style.css          # Estilo visual personalizado
+      └── imagens/           # Imagens dos Arcanos Maiores e fundo
+         ├── 1.jpg
+         ├── 2.jpg
+         ├── ...
+         └── fundo3.jpg
+________________________________________
+Funcionalidades
+   •	Geração de conselho anual com base no nome, ano e aniversário do consulente
+   •	Modal de cadastro com validação de e-mail e nome completo
+   •	 Exibição do histórico de conselhos com possibilidade de exclusão
+   •	 Validações front-end para dados obrigatórios e formatos (ano com 4 dígitos, data de nascimento no passado, etc.)
+   •	 Exibição automática da imagem do arcano relacionado ao conselho gerado pelo ano e data de nascimento.
+   •	 Integração com a API Flask para consulta, cadastro e histórico
+   •	 Botão Limpar que reseta os campos e retorna à tela inicial.
+________________________________________
+ Como Executar
+   1.	Certifique-se de que o back-end Flask (meu_app_api) esteja rodando na porta padrão http://localhost:5000.
+   2.	Com isso feito, abra o index.html no navegador:
+   o	Clique duas vezes no arquivo
+   ou
+   o	Execute pelo terminal:
+________________________________________
+Conexão com a API
+A aplicação faz chamadas para os seguintes endpoints da API local:
+Endpoint	Método	Função
+   /conselho	POST	Geração do conselho
+   /consulentes	POST	Cadastro de novos consulentes
+   /historico	GET	Lista o histórico de conselhos
+   /historico/{id}	DELETE	Exclui conselho do histórico
+________________________________________
+Observações
+   •	O campo "Ano" só aceita exatamente 4 dígitos numéricos.
+   •	O campo "Data de nascimento" deve estar no formato DD/MM/AAAA e não pode estar no futuro.
+   •	O rodapé foi adaptado para ser exibido sem necessidade de rolagem.
+   •	As mensagens e erros estão padronizados para feedback claro ao usuário.
 
-▶️ Como visualizar
-Certifique-se de que a API esteja ativa (consulte o README.md do backend).
-Abra o arquivo index.html em seu navegador.
-Preencha os campos:
-
-   Ano desejado
-   Data de nascimento
-
-Clique em "Gerar Conselho" para visualizar o arcano correspondente ao ano desejado.
-
-Para se cadastrar como consulente:
-
-Clique em "Clique aqui" abaixo do conselho fornecido.
-
-   Preencha os campos Nome e E-mail
-
-Após gerar um conselho, você poderá visualizar o histórico de conselhos gerados e excluir conselhos individualmente.
-
-Clique em "Histórico de Conselhos" para visualizar a lista de conselhos gerados na api.
-
-Para excluir um conselho já gerado.
-
-Clique em "Histórico de Conselhos" para visualizar a lista de conselhos gerados na api.
-
-Clique no ícone da lixeira ao lado do conselho que deseja remover, e pronto o conselho será removido.
-
-🔄 Comunicação com o Backend
-O front consome os seguintes endpoints da API:
-
-      POST /conselho – Geração do conselho com base no ano e data de nascimento.
-
-      POST /consulentes – Cadastro do usuário.
-
-      GET /historico – Consulta do histórico de conselhos.
-
-      DELETE /historico/<id> – Exclusão de um conselho específico.
-
-🎯 Funcionalidades
-Máscara automática para a data de nascimento (formato DD/MM/AAAA)
-
-Validações de campos (nome completo, e-mail, data futura, ano inválido)
-
-Modal de cadastro com feedback visual
-
-Exibição dinâmica do conselho gerado
-
-Visualização e exclusão do histórico de conselhos
-
-Botão de retorno para tela inicial
-
-📌 Observações
-As imagens dos Arcanos devem estar corretamente nomeadas (de 1.jpg até 21.jpg) na pasta /imagens.
-
-O front-end depende que o backend esteja rodando localmente em http://localhost:5000.
-
-Recomendado utilizar o navegador Google Chrome ou Mozilla Firefox para melhor compatibilidade.
-
-Projeto desenvolvido para fins educacionais.
