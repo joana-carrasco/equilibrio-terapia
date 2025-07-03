@@ -165,8 +165,7 @@
             "in": "path",
             "required": true,
             "type": "integer",
-            "description": "ID do conselho a ser removido",
-            "example": 3
+            "description": "ID do conselho a ser removido"
           }
         ],
         "responses": {
